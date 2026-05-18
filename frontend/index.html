@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>QyverixAI — AI Developer Assistant</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⬡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
@@ -913,7 +914,7 @@ footer a:hover{color:var(--accent)}
 
     <!-- Analyze -->
     <div class="analyze-row">
-      <button class="btn-analyze" id="analyzeBtn">
+      <button class="btn-analyze" id="analyzeBtn" title="Analyze Code (Ctrl+Enter / ⌘+Enter)">
         <div class="spinner" id="spinner"></div>
         <span class="btn-text">Analyze Code</span>
       </button>
@@ -1068,13 +1069,13 @@ document.getElementById('themeToggle').addEventListener('click', () => {
    EDITOR
 ═══════════════════════════════════════════════════════════════ */
 function updateEditor() {
-  const val = editor.value;
+  const val = editor.value.replace(/\r\n/g, '\n');
   const lines = val ? val.split('\n').length : 0;
   const chars = val.length;
   const nonBlank = val ? val.split('\n').filter(l => l.trim()).length : 0;
   charCount.textContent = val
-    ? chars.toLocaleString() + ' chars · ' + lines + ' lines · ' + nonBlank + ' non-blank'
-    : 'Paste or type code to begin';
+    ? chars.toLocaleString() + ' chars · ' + lines + ' line' + (lines !== 1 ? 's' : '') + ' · ' + nonBlank + ' non-blank'
+    : '0 chars · 0 lines';
   const lineCount = Math.max(lines, 1);
   lineNumbers.innerHTML = val
     ? Array.from({length: lineCount}, (_, i) => i + 1).join('<br>')

@@ -40,7 +40,8 @@ document.querySelectorAll('.tab').forEach(tab => {
 
 // ── Line count ──
 codeInput.addEventListener('input', () => {
-  const lines = codeInput.value.split('\n').length;
+  const val = codeInput.value.replace(/\r\n/g, '\n');
+  const lines = val ? val.split('\n').length : 0;
   lineCount.textContent = `${lines} line${lines !== 1 ? 's' : ''}`;
 });
 

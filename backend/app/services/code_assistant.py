@@ -33,6 +33,14 @@ LANG_SIGNATURES: dict[str, list[str]] = {
         r"#include\s*<", r"\bstd::\w+", r"\bcout\s*<<",
         r"\bint\s+main\s*\(", r"::\w+",
     ],
+    "Go": [
+        r"\bpackage\s+\w+", r"\bfunc\s+\w+\s*\(", r"\bimport\s*\(",
+        r"fmt\.Print", r":=", r"\bgo\s+func\("
+    ],
+    "Rust": [
+        r"\bfn\s+\w+\s*\(", r"\blet\s+mut\s+", r"\bimpl\s+\w+",
+        r"\bpub\s+(fn|struct|enum|trait)\b", r"println!\s*\(", r"\buse\s+std::"
+    ],
 }
 
 
@@ -45,6 +53,8 @@ def detect_language(code: str, hint: str | None = None) -> str:
             "typescript": "TypeScript", "ts": "TypeScript",
             "java": "Java",
             "cpp": "C++", "c++": "C++", "cxx": "C++",
+            "go": "Go", "golang": "Go",
+            "rust": "Rust", "rs": "Rust",
         }
         if normalized in mapping:
             return mapping[normalized]
@@ -83,7 +93,7 @@ class BugPattern:
     description: str
     suggestion: str
     severity: str
-    languages: list[str] = field(default_factory=lambda: ["Python", "JavaScript", "TypeScript", "Java", "C++"])
+    languages: list[str] = field(default_factory=lambda: ["Python", "JavaScript", "TypeScript", "Java", "C++", "Go", "Rust"])
 
 
 BUG_PATTERNS: list[BugPattern] = [
